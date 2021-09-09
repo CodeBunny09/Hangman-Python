@@ -75,9 +75,21 @@ def hangman():
         print(f'You have {8-tries} tries left.')
         print('\n\nYou Loose...')
         print(f'The Word Was: {word}')
-        
-    input('Press the enter key to end <3')
+    
+    #add "play again?""        
+    play_again = input('Play again? Y / N : ')
+    if play_again == 'Y' or play_again == 'y': 
+        hangman()
+    else :
+        print('Thank you for playing')
+        clear()
+
         
 user_input = input('Press the enter key!!')
 print('\n\n')
 hangman()
+
+#sorry for my little contribution but i hope it help
+#i love this game and maybe i will create an interactive version of this when my programming skills grow
+#ty and love ur repo 
+#regards Kittyofheaven
