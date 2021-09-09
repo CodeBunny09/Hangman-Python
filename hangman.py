@@ -1,6 +1,8 @@
 import random
 from words import words
 import string
+import re
+import time
 from illustration import hangman_list
 from os import system, name
 
@@ -38,22 +40,40 @@ def hangman():
         print(f'You have {8-tries} tries left.')
         print(message)
         message = ''
-        
-        user_letter = input("Guess a letter: ").upper()
-        if user_letter in alphabet - used_letters:
-            used_letters.add(user_letter)
-            if user_letter in word_letters:
-                word_letters.remove(user_letter)
+        #adding first letter so u dont have to type it mannualy using regex
+        if bool(re.compile(word[0]).search(''.join(word_list))) == False:
+            print (word[0])
+            user_letter = word[0].upper()
+            if user_letter in alphabet - used_letters:
+                used_letters.add(user_letter)
+                if user_letter in word_letters:
+                    word_letters.remove(user_letter)
+                else:
+                    incorrect_guesses.add(user_letter)
+                    tries = len(incorrect_guesses)
+                    hman = hangman_list[tries-1]
+            
+            elif user_letter in used_letters:
+                message = '\n\nYou already guessed that word...\tTry again!'
             else:
-                incorrect_guesses.add(user_letter)
-                tries = len(incorrect_guesses)
-                hman = hangman_list[tries-1]
+                message = '\n\nInvalid Guess :\'(\tTry again!'
+        else :
+            user_letter = input("Guess a letter: ").upper()
+            if user_letter in alphabet - used_letters:
+                used_letters.add(user_letter)
+                if user_letter in word_letters:
+                    word_letters.remove(user_letter)
+                else:
+                    incorrect_guesses.add(user_letter)
+                    tries = len(incorrect_guesses)
+                    hman = hangman_list[tries-1]
+            
+            elif user_letter in used_letters:
+                message = '\n\nYou already guessed that word...\tTry again!'
+            else:
+                message = '\n\nInvalid Guess :\'(\tTry again!'
         
-        elif user_letter in used_letters:
-            message = '\n\nYou already guessed that word...\tTry again!'
-        else:
-            message = '\n\nInvalid Guess :\'(\tTry again!'
-    
+        
     
     
     if tries < 8:
@@ -81,7 +101,8 @@ def hangman():
     if play_again == 'Y' or play_again == 'y': 
         hangman()
     else :
-        print('Thank you for playing')
+        print('Thank you for playing!!!') #add this bye bye messages :(
+        time.sleep(2)
         clear()
 
         
